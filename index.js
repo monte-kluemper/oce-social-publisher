@@ -1,4 +1,5 @@
 const express = require('express')
+const helmet = require('helmet')
 const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -17,6 +18,7 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
+app.use(helmet())
 
 // return all events in db 
 const getEvents = async (req, res) => {
