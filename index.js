@@ -36,15 +36,11 @@ const getEvents = async (req, res) => {
 const webhookPost = async (req, res) => {
 	try {
 		console.log('** debug')
-		console.log(req.body)
+		console.log(JSON.stringify(req.body.entity.items))
 
 		// validate the payload schema
-		if (!req.body.webhook.name || !req.body.event.id || !req.body.event.name || !req.body.event.initiatedBy || !req.body.entity.id) {
+		if (!req.body.event.id || !req.body.event.name || !req.body.event.initiatedBy || !req.body.entity.id) {
 			res.status(400).send({ status: 400, error: 'Request not properly formed' })
-		}
-		// validate the payload type
-		else if (req.body.webhook.name != 'content-detailed') {
-			res.status(400).send({ status: 400, error: 'Detailed payload required. Please re-configure your OCE webhook.' })
 		}
 		else {
 			try {
