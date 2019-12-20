@@ -1,8 +1,7 @@
 const express = require('express')
-const helmet = require('helmet')
-const path = require('path')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const helmet = require('helmet')
 const { Pool } = require('pg')
 
 const PORT = process.env.PORT || 5000
