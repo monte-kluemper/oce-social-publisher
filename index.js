@@ -37,10 +37,13 @@ const getEvents = async (req, res) => {
 const webhookPost = async (req, res) => {
 	try {
 		console.log('** debug')
-		console.log(JSON.stringify(req.body.entity.items))
+		console.log(req.body.entity.items[0][0].id)
+		console.log(req.body.entity.items[0][0].name)
+		console.log(JSON.stringify(req.body))
+		console.log('** end debug')
 
 		// validate the payload schema
-		if (!req.body.event.id || !req.body.event.name || !req.body.event.initiatedBy || !req.body.entity.id) {
+		if (!req.body.event.id || !req.body.event.name || !req.body.event.initiatedBy || !req.body.entity.id) { //req.body.entity.id = channel
 			res.status(400).send({ status: 400, error: 'Request not properly formed' })
 		}
 		else {
