@@ -35,6 +35,9 @@ const getEvents = async (req, res) => {
 // save webhook event to db 
 const webhookPost = async (req, res) => {
 	try {
+		console.log('** debug')
+		console.log(req.body)
+
 		// validate the payload schema
 		if (!req.body.webhook.name || !req.body.event.id || !req.body.event.name || !req.body.event.initiatedBy || !req.body.entity.id) {
 			res.status(400).send({ status: 400, error: 'Request not properly formed' })
