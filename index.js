@@ -36,20 +36,24 @@ const getEvents = async (req, res) => {
 // save webhook event to db 
 const webhookPost = async (req, res) => {
 	try {
-		console.log('** debug')
-		console.log(req.body.entity.items[0][0].id)
-		console.log(req.body.entity.items[0][0].name)
-		console.log(JSON.stringify(req.body))
-		console.log('** end debug')
-
 		// validate the payload schema
-		if (!req.body.event.id || !req.body.event.name || !req.body.event.initiatedBy || !req.body.entity.id) { //req.body.entity.id = channel
+		if (!req.body.event.id || !req.body.event.name || !req.body.event.initiatedBy || !req.body.entity.id || !req.body.entity.items[0].length) {
 			res.status(400).send({ status: 400, error: 'Request not properly formed' })
 		}
 		else {
+			// iterate items to extract details
+			var assets = [];
+			req.body.entity.items[0].forEach(function(item){
+				assets.push({
+					id: item.id,
+					type: item.type,
+					name: item.name
+				});
+			});
+
 			try {
 				const client = await pool.connect()
-				const result = await client.query('INSERT INTO asset_event (event_id, event_type, content_id, user_id) VALUES ($1, $2, $3, $4)', [req.body.event.id, req.body.event.name, req.body.entity.id, req.body.event.initiatedBy]);
+				const result = await client.query('INSERT INTO asset_event (event_id, event_type, channel_id, user_id, assets) VALUES ($1, $2, $3, $4, $5)', [req.body.event.id, req.body.event.name, req.body.entity.id, req.body.event.initiatedBy, assets]);
 				console.log('* Inserted new event')
 				res.status(201).json({status: 201})
 			} catch (err) {
