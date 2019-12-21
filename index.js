@@ -50,6 +50,7 @@ const webhookPost = async (req, res) => {
 					"name": '"' + item.name + '"'
 				});
 			});
+			console.log(assets);
 
 			try {
 				const client = await pool.connect()
