@@ -54,7 +54,7 @@ const webhookPost = async (req, res) => {
 
 			try {
 				const client = await pool.connect()
-				const result = await client.query('INSERT INTO asset_event (event_id, event_type, channel_id, user_id, assets) VALUES ($1, $2, $3, $4, $5)', [req.body.event.id, req.body.event.name, req.body.entity.id, req.body.event.initiatedBy, assets]);
+				const result = await client.query('INSERT INTO asset_event (event_id, event_type, channel_id, user_id, assets) VALUES ($1, $2, $3, $4, $5)', [req.body.event.id, req.body.event.name, req.body.entity.id, req.body.event.initiatedBy, {assets}]);
 				console.log('* Inserted new event')
 				res.status(201).json({status: 201})
 			} catch (err) {
