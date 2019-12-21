@@ -45,9 +45,9 @@ const webhookPost = async (req, res) => {
 			var assets = [];
 			req.body.entity.items[0].forEach(function(item){
 				assets.push({
-					"id": '"' + item.id + '"',
-					"type": '"' + item.type + '"',
-					"name": '"' + item.name + '"'
+					id: item.id,
+					type: item.type,
+					name: item.name
 				});
 			});
 			console.log(assets);
