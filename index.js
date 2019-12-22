@@ -72,10 +72,6 @@ app
   .get('/api/events', getEvents)
   .post('/webhook', webhookPost)
   .get('*', function(req, res){
-	const quotes = [
-		'Not all those who wander are lost. -- J.R.R. Tolkien',
-		'The journey not the arrival matters. -- T.S. Eliot'
-	];
-	res.status(404).send(quotes[Math.floor(Math.random()*quotes.length)]);
+	res.status(404).send('Resource not found');
   })
   .listen(PORT, () => console.log(`OCE Webook Node.js listening on ${ PORT }`))
