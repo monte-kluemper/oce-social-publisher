@@ -19,20 +19,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 app.use(helmet())
 
-// return all events in db 
-const getEvents = async (req, res) => {
-	try {
-		const client = await pool.connect()
-		const result = await client.query('SELECT * FROM asset_event');
-		const results = { 'results': (result) ? result.rows : null};
-		res.status(200).json(results)
-		client.release();
-	} catch (err) {
-		console.error('* webhook get error:\n' + err);
-		res.status(500).send({ error: 'Existential server error' })
-	}
-}
-
 // save webhook event to db 
 const webhookPost = async (req, res) => {
 	try {
@@ -50,7 +36,6 @@ const webhookPost = async (req, res) => {
 					name: item.name
 				});
 			});
-			console.log(assets);
 
 			try {
 				const client = await pool.connect()
@@ -69,8 +54,7 @@ const webhookPost = async (req, res) => {
 }
 
 app
-  .get('/api/events', getEvents)
-  .post('/webhook', webhookPost)
+  .post('/', webhookPost)
   .get('*', function(req, res){
 	res.status(404).send('Resource not found');
   })
