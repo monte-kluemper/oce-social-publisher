@@ -55,7 +55,7 @@ const webhookChannel = async (req, res) => {
 
 // save webhook repository event to db 
 const webhookRepository = async (req, res) => {
-	console.log(req.body);
+	console.log(JSON.stringify(req.body));
 	res.status(400).send({ status: 400, error: 'Could not process request' })
 }
 
