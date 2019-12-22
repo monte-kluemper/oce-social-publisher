@@ -19,8 +19,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 app.use(helmet())
 
-// save webhook event to db 
-const webhookPost = async (req, res) => {
+// save webhook channel event to db 
+const webhookChannel = async (req, res) => {
 	try {
 		// validate the payload schema
 		if (!req.body.event.id || !req.body.event.name || !req.body.event.initiatedBy || !req.body.entity.id || !req.body.entity.items[0].length) {
@@ -40,21 +40,28 @@ const webhookPost = async (req, res) => {
 			try {
 				const client = await pool.connect()
 				const result = await client.query('INSERT INTO asset_event (event_id, event_type, channel_id, user_id, assets) VALUES ($1, $2, $3, $4, $5)', [req.body.event.id, req.body.event.name, req.body.entity.id, req.body.event.initiatedBy, {assets}]);
-				console.log('* Inserted new event')
+				console.log('* Inserted new webhookChannel event')
 				res.status(201).json({status: 201})
 			} catch (err) {
-				console.error('** webhook post insert error:\n' + err);
-				res.status(400).send({ status: 500, error: 'Could not process request' })
+				console.error('** webhookChannel insert error:\n' + err);
+				res.status(400).send({ status: 400, error: 'Could not process request' })
 			}
 		}
 	} catch (err) {
-		console.error('* webhook post error:\n' + err);
+		console.error('* webhookChannel error:\n' + err);
 		res.status(500).send({ status: 500, error: 'Existential server error' })
 	}
 }
 
+// save webhook repository event to db 
+const webhookRepository = async (req, res) => {
+	console.log(req.body);
+	res.status(400).send({ status: 400, error: 'Could not process request' })
+}
+
 app
-  .post('/', webhookPost)
+  .post('/channel', webhookChannel)
+  .post('/repository', webhookRepository)
   .get('*', function(req, res){
 	res.status(404).send('Resource not found');
   })
