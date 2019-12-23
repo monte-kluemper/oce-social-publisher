@@ -62,13 +62,11 @@ const webhookRepository = async (req, res) => {
 		}
 		else {
 			// extract channel
-			console.log(req.body.event.channelIds);
 			var channels = !req.body.event.channelIds ? [] : req.body.event.channelIds;
 
 			try {
 				const client = await pool.connect()
-				const result = await client.query('INSERT INTO repository_event (event_id, event_type, repository_id, user_id, channel_id, asset) VALUES ($1, $2, $3, $4, $5, $6)', 
-				[req.body.event.id, req.body.event.name, req.body.entity.repositoryId, req.body.event.initiatedBy, {channels}, req.body.entity]);
+				const result = await client.query('INSERT INTO repository_event (event_id, event_type, repository_id, user_id, channel_id, asset) VALUES ($1, $2, $3, $4, $5, $6)', [req.body.event.id, req.body.event.name, req.body.entity.repositoryId, req.body.event.initiatedBy, {channels}, req.body.entity]);
 				console.log('* Inserted new webhookRepository event')
 				res.status(201).json({status: 201})
 			} catch (err) {
