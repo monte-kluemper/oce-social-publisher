@@ -62,7 +62,7 @@ const webhookRepository = async (req, res) => {
 		}
 		else {
 			// extract channel
-			var channels = req.body.event.channelIds ? req.body.event.channelIds : [];
+			var channels = !req.body.event.channelIds ? [] : req.body.event.channelIds;
 
 			try {
 				const client = await pool.connect()
