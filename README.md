@@ -32,7 +32,7 @@ $ heroku login
 The OCE webhook will call the URL generated from this step.
 
 ```console
-$ heroku create <app-name>
+$ heroku create your-app-name
 $ git push heroku master
 ```
 
@@ -71,7 +71,7 @@ Select _Asset Publishing Webhook_ and fill in the following:
 | **Publishing Channel** | _select one for testing_ |
 | **Events** | _select individual events and Channel Asset Published and Channel Asset Unpublished_ |
 | **Payload** | Detailed |
-| **Target URL** | https://<app-name>.herokuapp.com/channel |
+| **Target URL** | https://your-app-name.herokuapp.com/channel |
 
 Save the Webhook.
 
