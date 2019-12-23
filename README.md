@@ -41,13 +41,25 @@ The OCE webhook will call the URL generated from this step.
 
 ```console
 $ heroku create your-app-name
+Creating ⬢ your-app-name... done
+https://your-app-name.herokuapp.com/ | https://git.heroku.com/your-app-name.git
+
 $ git push heroku master
+remote: Verifying deploy... done.
+To https://git.heroku.com/oce-apps-daily-summary.git
+ * [new branch]      master -> master
 ```
 
 #### 4. Provision a Postgres database.
 
 ```console
 $ heroku addons:create heroku-postgresql:hobby-dev
+Creating heroku-postgresql:hobby-dev on ⬢ your-app-name... free
+Database has been created and is available
+ ! This database is empty. If upgrading, you can transfer
+ ! data from another database with pg:copy
+Created postgresql as DATABASE_URL
+Use heroku addons:docs heroku-postgresql to view documentation
 ```
 
 #### 5. Create the tables in database.
