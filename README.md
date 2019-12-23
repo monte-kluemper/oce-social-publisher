@@ -12,22 +12,30 @@ This application persistently stores those notification events in a Postgres dat
 
 ### Quick Start
 
-These intructions are based off the [Getting Started](https://devcenter.heroku.com/articles/getting-started-with-nodejs?singlepage=true) documention on Heroku Dev Center.
+In this example, we will store asset publish and unpublish events for an OCE channel.
 
-#### Clone the repository.
+#### 1. Clone the repository.
 
 ```console
 $ git clone https://github.com/johnmoney/oce-webhook-nodejs.git
+Cloning into 'oce-webhook-nodejs'...
+Unpacking objects: 100% (94/94), done.
+
 $ cd oce-webhook-nodejs
 ```
 
-#### Install Heroku locally and login.
+#### 2. Install Heroku CLI and login.
+
+Refer to the [Getting Started](https://devcenter.heroku.com/articles/getting-started-with-nodejs?singlepage=true) documention to install the Heroku Command Line Interface.
 
 ```console
 $ heroku login
+heroku: Press any key to open up the browser to login or q to exit: 
+Logging in... done
+Logged in as your-email
 ```
 
-#### Deploy the app to Heroku.
+#### 3. Deploy the app to Heroku.
 
 The OCE webhook will call the URL generated from this step.
 
@@ -36,13 +44,13 @@ $ heroku create your-app-name
 $ git push heroku master
 ```
 
-#### Provision a Postgres database.
+#### 4. Provision a Postgres database.
 
 ```console
 $ heroku addons:create heroku-postgresql:hobby-dev
 ```
 
-#### Create the tables in Postgres.
+#### 5. Create the tables in database.
 
 ```console
 $ heroku pg:psql
@@ -65,9 +73,9 @@ your-app-name::DATABASE=> \q
 ```
 
 
-#### Setup the webhook in OCE.
+#### 6. Setup the webhook in OCE.
 
-In this example, we will store asset publish and unpublish events for a channel. From Admin > Integrations, select _Webhooks_ and click the Create button.
+From Admin > Integrations, select _Webhooks_ and click the Create button.
 
 Select _Asset Publishing Webhook_ and fill in the following:
 
@@ -81,7 +89,9 @@ Select _Asset Publishing Webhook_ and fill in the following:
 
 Save the Webhook.
 
-### Test the webhook by viewing the Heroku logs.
+### 7. Test the webhook.
+
+Interactively view the Heroku logs to see events streaming to your console.
 
 ```console
 $ heroku logs --source app --tail
@@ -95,4 +105,4 @@ When you are done, exit the log.
 $ ^C
 ```
 
-__That's it.__ You now have a persistent store of notification events for the channel. You can view the database within Heroku by creating a [dataclip](https://data.heroku.com/dataclips) or extend the application for your own purposes.
+__That's it.__ You now have a persistent store of publish and unpublish events for the channel. You can view the database within Heroku by creating a [dataclip](https://data.heroku.com/dataclips) or extend the application for your own purposes.
