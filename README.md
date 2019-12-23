@@ -46,16 +46,22 @@ $ heroku addons:create heroku-postgresql:hobby-dev
 
 ```console
 $ heroku pg:psql
+--> Connecting to postgresql
+psql (12.1, server 11.6 (Ubuntu 11.6-1.pgdg16.04+1))
+SSL connection (protocol: TLSv1.2, cipher: ECDHE-RSA-AES256-GCM-SHA384, bits: 256, compression: off)
+Type "help" for help.
 
-=> CREATE TABLE channel_event (event_id VARCHAR(36) PRIMARY KEY, event_type VARCHAR(32) NOT NULL, channel_id VARCHAR(50) NOT NULL, user_id VARCHAR(255) NOT NULL, event_time timestamp DEFAULT current_timestamp, assets jsonb);
+your-app-name::DATABASE=> CREATE TABLE channel_event (event_id VARCHAR(36) PRIMARY KEY, event_type VARCHAR(32) NOT NULL, channel_id VARCHAR(50) NOT NULL, user_id VARCHAR(255) NOT NULL, event_time timestamp DEFAULT current_timestamp, assets jsonb);
+CREATE TABLE
 
-=> CREATE TABLE repository_event (event_id VARCHAR(36) PRIMARY KEY, event_type VARCHAR(32) NOT NULL, repository_id VARCHAR(50) NOT NULL, user_id VARCHAR(255) NOT NULL, event_time timestamp DEFAULT current_timestamp, channel_id jsonb, asset jsonb);
+your-app-name::DATABASE=> CREATE TABLE repository_event (event_id VARCHAR(36) PRIMARY KEY, event_type VARCHAR(32) NOT NULL, repository_id VARCHAR(50) NOT NULL, user_id VARCHAR(255) NOT NULL, event_time timestamp DEFAULT current_timestamp, channel_id jsonb, asset jsonb);
+CREATE TABLE
 ```
 
 After the tables are created, exit the database prompt.
 
 ```console
-=> \q
+your-app-name::DATABASE=> \q
 ```
 
 

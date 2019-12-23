@@ -6,3 +6,12 @@ CREATE TABLE channel_event (
   event_time timestamp DEFAULT current_timestamp,
   assets jsonb
 );
+CREATE TABLE repository_event (
+  event_id VARCHAR(36) PRIMARY KEY,
+  event_type VARCHAR(32) NOT NULL,
+  repository_id VARCHAR(50) NOT NULL,
+  user_id VARCHAR(255) NOT NULL,
+  event_time timestamp DEFAULT current_timestamp,
+  channel_id jsonb,
+  asset jsonb
+);

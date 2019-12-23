@@ -39,7 +39,7 @@ const webhookChannel = async (req, res) => {
 
 			try {
 				const client = await pool.connect()
-				const result = await client.query('INSERT INTO asset_event (event_id, event_type, channel_id, user_id, assets) VALUES ($1, $2, $3, $4, $5)', [req.body.event.id, req.body.event.name, req.body.entity.id, req.body.event.initiatedBy, {assets}]);
+				const result = await client.query('INSERT INTO channel_event (event_id, event_type, channel_id, user_id, assets) VALUES ($1, $2, $3, $4, $5)', [req.body.event.id, req.body.event.name, req.body.entity.id, req.body.event.initiatedBy, {assets}]);
 				console.log('* Inserted new webhookChannel event')
 				res.status(201).json({status: 201})
 			} catch (err) {
@@ -55,8 +55,30 @@ const webhookChannel = async (req, res) => {
 
 // save webhook repository event to db 
 const webhookRepository = async (req, res) => {
-	console.log(JSON.stringify(req.body));
-	res.status(400).send({ status: 400, error: 'Could not process request' })
+	try {
+		// validate the payload schema
+		if (!req.body.event.id || !req.body.event.name || !req.body.event.initiatedBy || !req.body.entity.repositoryId) {
+			res.status(400).send({ status: 400, error: 'Request not properly formed' })
+		}
+		else {
+			// extract channel
+			var channels = req.body.event.channelIds ? req.body.event.channelIds : [];
+
+			try {
+				const client = await pool.connect()
+				const result = await client.query('INSERT INTO repository_event (event_id, event_type, repository_id, user_id, channel_id, assets) VALUES ($1, $2, $3, $4, $5, $6)', 
+				[req.body.event.id, req.body.event.name, req.body.entity.repositoryId, req.body.event.initiatedBy, {channels}, req.body.entity]);
+				console.log('* Inserted new webhookRepository event')
+				res.status(201).json({status: 201})
+			} catch (err) {
+				console.error('** webhookRepository insert error:\n' + err);
+				res.status(400).send({ status: 400, error: 'Could not process request' })
+			}
+		}
+	} catch (err) {
+		console.error('* webhookRepository error:\n' + err);
+		res.status(500).send({ status: 500, error: 'Existential server error' })
+	}
 }
 
 app
