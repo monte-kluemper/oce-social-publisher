@@ -26,7 +26,7 @@ $ cd oce-webhook-nodejs
 
 #### 2. Install Heroku CLI and login.
 
-Refer to the [Getting Started](https://devcenter.heroku.com/articles/getting-started-with-nodejs?singlepage=true) documention to install the Heroku Command Line Interface.
+Refer to the [Getting Started](https://devcenter.heroku.com/articles/getting-started-with-nodejs?singlepage=true) documentation to install the Heroku Command Line Interface.
 
 ```console
 $ heroku login
